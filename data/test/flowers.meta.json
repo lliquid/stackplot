@@ -1,0 +1,10 @@
+{
+	"ninstances": 150,
+	"attrs": [
+	{"name": "sepal_length", "type": "numerical"}, 
+	{"name": "sepal_width", "type": "numerical"},
+	{"name": "petal_length", "type": "numerical"},
+	{"name": "petal_width", "type": "numerical"},
+	{"name": "species", "type": "categorical"}]
+}
+

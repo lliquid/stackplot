@@ -1,0 +1,95 @@
+var StackPlot = React.createClass({
+	displayName: 'StackPlot',
+	componentDidMount: function() {
+		if (this.props.attrX.type != 'numerical' || this.props.attrY.type != 'numerical') {
+			return
+		}
+		var canvas = this.getDOMNode();
+		var stackPlot = new StackPlot_(d3.select(canvas), this.props)
+		stackPlot.render(this.props.data, this.props.meta, this.props.attrX.name, this.props.attrY.name)
+	},
+	render: function() {
+		var cx = React.addons.classSet
+		var classes = cx({
+			'StackPlot': true,
+			'focused': this.props.focused
+		})
+		return <g className={classes} transform={geom.transform.begin().translate(this.props.x, this.props.y).end()} onMouseOver={this.props.onMouseOver_}></g>
+	}
+})
+
+
+var SPLOM = React.createClass({
+	displayName: 'SPLOM',
+	handleMouseOverCell: function(r, c) {
+		this.setState({focus: {r:r, c:c}})
+	},
+	loadData: function() {
+		var that = this
+		d3.csv(that.props.url_csv, function(err, data){
+			d3.json(that.props.url_meta, function(err, meta) {
+				that.setState({data: data})
+				that.setState({meta: meta})
+			})
+		})
+	},
+	getInitialState: function() {
+		return {data: [], meta: {ninstances: 0, attrs: []}, focus: {r: -1, c: -1}}
+	},
+	componentDidMount: function() {
+		this.loadData()
+  	},
+	componentDidUpdate: function() {
+		var canvas = this.getDOMNode()		
+	},
+  	render: function () {
+		var that = this,
+			x0 = that.props.splomConfiguration.geometry.x,
+			y0 = that.props.splomConfiguration.geometry.y,
+			w = that.props.stackPlotConfiguration.geometry.w,
+			h = that.props.stackPlotConfiguration.geometry.h,
+			dx = that.props.splomConfiguration.geometry.dx,
+			dy = that.props.splomConfiguration.geometry.dy
+		var cx = React.addons.classSet			
+		var components = []
+		var matrixCells = that.state.meta.attrs.map(function(attrX, i) {
+			var x = (w + dx) * i
+			return that.state.meta.attrs.map(function(attrY, j) {
+				var y = (h + dy) * j
+				return <StackPlot data={that.state.data} {...that.props.stackPlotConfiguration} attrX={attrX} attrY={attrY} x={x} y={y} onMouseOver_={_.partial(that.handleMouseOverCell, i, j)} focused={i== that.state.focus.r && j == that.state.focus.c}/>
+			})
+		})
+
+		var xLabels = this.state.meta.attrs.map(function(attr, i) {
+			var x = (w + dx) * i + w / 2,
+				y = - dy
+			var cls = cx({
+				'xLabel': true,
+				'focused': i == that.state.focus.r
+			})
+			return <text className={cls} x={x} y={y} textAnchor="middle">{attr.name}</text>
+		})
+		var yLabels = this.state.meta.attrs.map(function(attr, i) {
+			var y = (h + dy) * i + h,
+				x = - dx
+			var cls = cx({
+				'yLabel': true,
+				'focused': i == that.state.focus.c
+			})				
+			return <text className={cls} x={x} y={y} textAnchor="end">{attr.name}</text>
+ 		})
+
+ 		components.push(<g className="matrixCells">{matrixCells}</g>)
+ 		components.push(<g className="xLabels">{xLabels}</g>)
+ 		components.push(<g className="yLabels">{yLabels}</g>)
+		return <g className="SPLOM" transform={geom.transform.begin().translate(x0, y0).end()}>{components}</g>
+	}
+})
+
+$(function() {
+	React.render(
+		<SPLOM url_csv = "data/test/flowers.csv" url_meta = "data/test/flowers.meta.json" {...config}/>,
+		document.getElementById('canvas')
+	)
+})
+

@@ -1,0 +1,50 @@
+body {
+	font-family: Gill Sans,Gill Sans MT,Calibri,sans-serif; 
+}
+
+text {
+	font-family: Lucida Sans Typewriter,Lucida Console,monaco,Bitstream Vera Sans Mono,monospace; 
+	fill: #666;
+	font-size: 10px;	
+}
+
+.StackPlot rect {
+	stroke: #fff;
+	stroke-width: 0;
+}
+
+.StackPlot {
+    transition: fill-opacity 0.5s ease-in-out;
+
+	fill-opacity: 0.25;
+}
+
+.StackPlot.focused {
+    transition: fill-opacity 0.5s ease-in-out;
+
+	fill-opacity: 1.0;
+}
+
+.xLabel {
+    transition: opacity 0.5s ease-in-out;
+
+	opacity: 0.3
+}
+
+.yLabel {
+    transition: opacity 0.5s ease-in-out;
+
+	opacity: 0.3
+}
+
+.yLabel.focused {
+    transition: opacity 0.5s ease-in-out;
+
+	opacity: 1.0
+}
+
+.xLabel.focused {
+    transition: opacity 0.5s ease-in-out;
+
+	opacity: 1.0
+}
