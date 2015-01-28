@@ -6,8 +6,8 @@ var ScatterPlot_ = function(canvas, config) {
 
 ScatterPlot_.prototype.render = function(data, meta, attrX, attrY) {
 
-	var itrX = function(d) {return d[attrX]},
-		itrY = function(d) {return d[attrY]}
+	var itrX = function(d) {return parseFloat(d[attrX])},
+		itrY = function(d) {return parseFloat(d[attrY])}
 
 	var minX = _.min(data, itrX)[attrX],
 		maxX = _.max(data, itrX)[attrX],
@@ -38,10 +38,10 @@ ScatterPlot_.prototype.render = function(data, meta, attrX, attrY) {
 		.append('circle')
 		.attr('class','point')
 		.attr('cx', function(i) {
-			return (data[i][attrX] - minX) * scaleX + padding
+			return (parseFloat(data[i][attrX]) - minX) * scaleX + padding
 		})
 		.attr('cy', function(i) {
-			return  h - ((data[i][attrY] - minY) * scaleY) + padding
+			return  h - ((parseFloat(data[i][attrY]) - minY) * scaleY) + padding
 		})
 		.attr('r', this.pointProps.size)
 		.attr('fill', this.pointProps.color)

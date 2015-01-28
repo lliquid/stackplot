@@ -121,7 +121,7 @@ var SPLOM = React.createClass({
 
 $(function() {
 	React.render(
-		React.createElement(SPLOM, React.__spread({url_csv: "data/test/flowers.csv", url_meta: "data/test/flowers.meta.json"},  config)),
+		React.createElement(SPLOM, React.__spread({url_csv: "data/test/cereals.csv", url_meta: "data/test/cereals.meta.json"},  config)),
 		document.getElementById('canvas')
 	)
 })

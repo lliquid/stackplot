@@ -6,8 +6,8 @@ var StackPlot_ = function(canvas, config) {
 
 StackPlot_.prototype.render = function(data, meta, attrX, attrY) {
 
-	var itrX = function(d) {return d[attrX]},
-		itrY = function(d) {return d[attrY]}
+	var itrX = function(d) {return parseFloat(d[attrX])},
+		itrY = function(d) {return parseFloat(d[attrY])}
 
 	var minX = _.min(data, itrX)[attrX],
 		maxX = _.max(data, itrX)[attrX],

@@ -12,7 +12,7 @@ config.splomConfiguration = {
 
 config.stackPlotConfiguration = {
 	geometry: {
-		w: 60,
+		w: 45,
 		h: 15,
 		x: 0,
 		y: 0
@@ -20,7 +20,7 @@ config.stackPlotConfiguration = {
 	binningStrategy: "equal", //or max kl divergence
 	attrs: {
 		x: {
-			nbins: 20,
+			nbins: 6,
 			name: "x",
 			attr: "x",
 			type: "numerical",
@@ -63,7 +63,17 @@ config.stackPlotConfiguration = {
 		'rgb(230,245,152)',
 		'rgb(171,221,164)',
 		'rgb(102,194,165)',
-		'rgb(50,136,189)'].map(function(rgbstr) {return tinycolor(rgbstr)}).reverse()
+		'rgb(50,136,189)'].map(function(rgbstr) {return tinycolor(rgbstr)}).reverse(),
+	colorRamp3:
+		['rgb(255,255,217)',
+		'rgb(237,248,177)',
+		'rgb(199,233,180)',
+		'rgb(127,205,187)',
+		'rgb(65,182,196)',
+		'rgb(29,145,192)',
+		'rgb(34,94,168)',
+		'rgb(37,52,148)',
+		'rgb(8,29,88)'].map(function(rgbstr) {return tinycolor(rgbstr)})
 }
 
 

@@ -27,13 +27,13 @@ text {
 
 .xLabel {
     transition: opacity 0.5s ease-in-out;
-
+	font-weight: 600;
 	opacity: 0.3
 }
 
 .yLabel {
     transition: opacity 0.5s ease-in-out;
-
+	font-weight: 600;
 	opacity: 0.3
 }
 
@@ -47,4 +47,9 @@ text {
     transition: opacity 0.5s ease-in-out;
 
 	opacity: 1.0
+}
+
+.ScatterPlot {
+    transition: fill-opacity 0.5s ease-in-out;
+	opacity: 1.0;
 }
