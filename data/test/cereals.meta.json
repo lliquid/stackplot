@@ -1,0 +1,20 @@
+{
+	"ninstances": 77,
+	"attrs": [
+		{"name": "Calories", "type": "numerical"},
+		{"name": "Protein", "type": "numerical"},
+		{"name": "Fat", "type": "numerical"}, 
+		{"name": "Sodium", "type": "numerical"},
+		{"name": "Fiber", "type": "numerical"},
+		{"name": "Carbohydrates", "type": "numerical"},
+		{"name": "Sugars", "type": "numerical"},
+		{"name": "Potassium", "type": "numerical"},
+		{"name": "Vitamins", "type": "numerical"},
+		{"name": "Weight", "type": "numerical"},
+		{"name": "Cups", "type": "numerical"},
+		{"name": "Cereal", "type": "key"}, 
+		{"name": "Manufacturer", "type": "categorical"},
+		{"name": "Type", "type": "categorical"},
+		{"name": "Shelf", "type": "categorical"}		
+	]
+}
