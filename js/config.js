@@ -4,7 +4,7 @@ var config = {}
 config.splomConfiguration = {
 	geometry: {
 		x: 100,
-		y: 40,
+		y: 50,
 		dx: 15,
 		dy: 10
 	}
@@ -70,14 +70,14 @@ config.stackPlotConfiguration = {
 
 config.scatterPlotConfiguration = {
 	geometry: {
-		w: 100,
-		h: 100,
+		w: 80,
+		h: 80,
 		x: 0,
-		y: 0
+		y: 0,
+		padding: 6
 	},
 	attrs: {
 		x: {
-			nbins: 20,
 			name: "x",
 			attr: "x",
 			type: "numerical",
@@ -87,7 +87,6 @@ config.scatterPlotConfiguration = {
 			}
 		},
 		y: {
-			nbins: 9,
 			name: "y",
 			attr: "y",
 			type: "numerical",
@@ -95,7 +94,15 @@ config.scatterPlotConfiguration = {
 				begin: 0,
 				end: 0
 			}
-		}		
+		}
+	},
+	pointProps: {
+		color: '#333',
+		opacity: 1.0,
+		size: 2		
+	},
+	backgroundProps: {
+		color: '#fff',
+		opacity: 1.0
 	}
-
 }

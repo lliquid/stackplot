@@ -14,7 +14,27 @@ var StackPlot = React.createClass({
 			'StackPlot': true,
 			'focused': this.props.focused
 		})
-		return <g className={classes} transform={geom.transform.begin().translate(this.props.x, this.props.y).end()} onMouseOver={this.props.onMouseOver_}></g>
+		return <g className={classes} transform={geom.transform.begin().translate(this.props.x, this.props.y).end()} onMouseOver={this.props.onMouseOver_} onClick={this.props.onClick_}></g>
+	}
+})
+
+var ScatterPlot = React.createClass({
+	displayName: 'ScatterPlot',
+	componentDidMount: function() {
+		if (this.props.attrX.type != 'numerical' || this.props.attrY.type != 'numerical') {
+			return
+		}
+		var canvas = this.getDOMNode();
+		var scatterPlot = new ScatterPlot_(d3.select(canvas), this.props)
+		scatterPlot.render(this.props.data, this.props.meta, this.props.attrX.name, this.props.attrY.name)
+	},
+	render: function() {
+		var cx = React.addons.classSet
+		var classes = cx({
+			'ScatterPlot': true,
+			'focused': this.props.focused
+		})
+		return <g className={classes} transform={geom.transform.begin().translate(this.props.x, this.props.y).end()} onClick={this.props.onClick_}></g>
 	}
 })
 
@@ -23,6 +43,14 @@ var SPLOM = React.createClass({
 	displayName: 'SPLOM',
 	handleMouseOverCell: function(r, c) {
 		this.setState({focus: {r:r, c:c}})
+	},
+	handleMouseClickCell: function(r, c) {
+		if (this.state.detail.r == r && this.state.detail.c == c) {
+			this.setState({detail: {r:-1, c:-1}})
+		}
+		else {
+			this.setState({detail: {r:r, c:c}})
+		}
 	},
 	loadData: function() {
 		var that = this
@@ -34,7 +62,7 @@ var SPLOM = React.createClass({
 		})
 	},
 	getInitialState: function() {
-		return {data: [], meta: {ninstances: 0, attrs: []}, focus: {r: -1, c: -1}}
+		return {data: [], meta: {ninstances: 0, attrs: []}, focus: {r: -1, c: -1}, detail: {r: -1, c:-1}}
 	},
 	componentDidMount: function() {
 		this.loadData()
@@ -56,7 +84,12 @@ var SPLOM = React.createClass({
 			var x = (w + dx) * i
 			return that.state.meta.attrs.map(function(attrY, j) {
 				var y = (h + dy) * j
-				return <StackPlot data={that.state.data} {...that.props.stackPlotConfiguration} attrX={attrX} attrY={attrY} x={x} y={y} onMouseOver_={_.partial(that.handleMouseOverCell, i, j)} focused={i== that.state.focus.r && j == that.state.focus.c}/>
+				if (i == that.state.detail.r && j == that.state.detail.c) {
+					return <ScatterPlot data={that.state.data} {...that.props.scatterPlotConfiguration} attrX={attrX} attrY={attrY} x={(x + w / 2) - that.props.scatterPlotConfiguration.geometry.w / 2} y={(y + h / 2) - that.props.scatterPlotConfiguration.geometry.h / 2} onClick_={_.partial(that.handleMouseClickCell, i, j)}/>
+				}
+				else {
+					return <StackPlot data={that.state.data} {...that.props.stackPlotConfiguration} attrX={attrX} attrY={attrY} x={x} y={y} onMouseOver_={_.partial(that.handleMouseOverCell, i, j)} onClick_={_.partial(that.handleMouseClickCell, i, j)} focused={i== that.state.focus.r && j == that.state.focus.c}/>
+				}
 			})
 		})
 
